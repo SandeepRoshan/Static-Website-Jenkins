@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/SandeepRoshan/Static-Website-Jenkins.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'No build needed for HTML file'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                bat '''
+                copy index.html C:\\inetpub\\wwwroot\\index.html /Y
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Deployment failed!'
+        }
+    }
+}
